@@ -3,7 +3,7 @@
  * = Q3D - quarns quick and dirty 3D-engine ;) (c) Outbreak 2001-2003        =
  * ===========================================================================
  *
- * @id		:	$Id: FillerCell.c,v 1.1 2004/01/24 21:41:43 quarn Exp $
+ * @id		:	$Id: FillerCell.c,v 1.2 2004/02/18 14:46:48 quarn Exp $
  * @brief	:	A filler that does Cellshading
  * @author	:	Fredrik "quarn" Ehnbom <quarn@home.se"
  *
@@ -15,8 +15,8 @@
 
 void q3dFillerCellInit(q3dTypeFillerCell *type) {
 	unsigned char cellTable[16] = {
-		0x80, 0x80, 0x80, 0xc0, 0xc0, 0xc0, 0xc0, 0xc0,
-		0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff
+		0x40, 0x40, 0x40, 0x40, 0xb0, 0xb0, 0xb0, 0xb0,
+		0xb0, 0xb0, 0xb0, 0xff, 0xff, 0xff, 0xff, 0xff
 	};
 
 	unsigned short ctCopy[64*8];
@@ -52,7 +52,7 @@ void q3dFillerCellInit(q3dTypeFillerCell *type) {
 void q3dFillerCellUpdate(q3dTypePolyhedron *poly) {
 	int i;
 	for (i = 0; i < poly->vertexLength; i++) {
-		float shade =  -poly->_vertexNormal[i].z;
+		float shade =  poly->_vertexNormal[i].z;
 		shade = CLAMP(shade);
 
 		float a = poly->material.color.a;
@@ -69,6 +69,11 @@ void q3dFillerCellUpdate(q3dTypePolyhedron *poly) {
 void q3dFillerCellDraw(q3dTypePolyhedron *poly) {
 	int i;
 
+	pvr_vertex_t *vert;
+	pvr_vertex_t *vert2;
+	pvr_dr_state_t state;
+	pvr_dr_init(state);
+
 	for (i = 0; i < poly->polygonLength; i++) {
 //		if (poly->pNormal[i].z > 0) continue;
 		int j;
@@ -76,10 +81,26 @@ void q3dFillerCellDraw(q3dTypePolyhedron *poly) {
 		int len = poly->polygon[i].vertexLength-1;
 
 		for (j = 0; j < len; j++) {
-			poly->_finalVertex[poly->polygon[i].vertex[j]].flags = PVR_CMD_VERTEX;
-			pvr_prim(&poly->_finalVertex[poly->polygon[i].vertex[j]], sizeof(pvr_vertex_t));
+			vert2 = &poly->_finalVertex[poly->polygon[i].vertex[j]];
+			vert = pvr_dr_target(state);
+			vert->flags = PVR_CMD_VERTEX;
+			vert->x = vert2->x;
+			vert->y = vert2->y;
+			vert->z = vert2->z;
+			vert->u = vert2->u;
+			vert->v = vert2->v;
+			vert->argb = vert2->argb;
+			pvr_dr_commit(vert);
 		}
-		poly->_finalVertex[poly->polygon[i].vertex[len]].flags = PVR_CMD_VERTEX_EOL;
-		pvr_prim(&poly->_finalVertex[poly->polygon[i].vertex[len]], sizeof(pvr_vertex_t));
+		vert2 = &poly->_finalVertex[poly->polygon[i].vertex[len]];
+		vert = pvr_dr_target(state);
+		vert->flags = PVR_CMD_VERTEX_EOL;
+		vert->x = vert2->x;
+		vert->y = vert2->y;
+		vert->z = vert2->z;
+		vert->u = vert2->u;
+		vert->v = vert2->v;
+		vert->argb = vert2->argb;
+		pvr_dr_commit(vert);
 	}
 }
