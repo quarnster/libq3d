@@ -17,7 +17,9 @@ OBJS = \
 	FillerTexture.o \
 	FillerEnvironment.o \
 	FillerWireframe.o \
-	FillerStandard.o
+	FillerStandard.o \
+	Quadtree.o \
+	Quadnode.o 
 
 
 include $(KOS_BASE)/addons/Makefile.prefab
