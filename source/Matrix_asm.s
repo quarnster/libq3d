@@ -41,11 +41,15 @@ _q3dMatrixTransform:
 	mov	r5,r0
 	mov	#4,r1
 	mov	#8,r2
+	mov	r4,r3
+	add	#3*4,r3
 .loop:
 	fmov.s	@r4+,fr0	! x
 	fmov.s	@r4+,fr1	! y
 	fmov.s	@r4+,fr2	! z
-	add	#4,r4		! skip the w-coordinate.. it's not used
+!	add	#4,r4		! skip the w-coordinate.. it's not used
+
+	pref	@r3
 
 	fldi1	fr3		! w
 	ftrv	xmtrx,fv0
@@ -57,6 +61,7 @@ _q3dMatrixTransform:
 	fdiv	fr3,fr2
 	fmov.s	fr2,@(r0,r2)
 	add	r7,r0
+	add	#3*4,r3
 	dt	r6
 	bf	.loop
 
@@ -81,11 +86,16 @@ _q3dMatrixTransformPVR:
 	mov	r5,r0
 	mov	#4,r1
 	mov	#8,r2
+	mov	r4,r3
+	add	#3*4,r3
 .pvrloop:
 	fmov.s	@r4+,fr0	! x
 	fmov.s	@r4+,fr1	! y
 	fmov.s	@r4+,fr2	! z
-	add	#4,r4		! skip the w-coordinate.. it's not used
+!	add	#4,r4		! skip the w-coordinate.. it's not used
+
+	pref	@r3
+
 	fldi1	fr3		! w
 	ftrv	xmtrx,fv0
 
@@ -97,6 +107,7 @@ _q3dMatrixTransformPVR:
 	fdiv	fr3,fr1
 	fmov.s	fr1,@(r0,r2)	! move 1 / w to the z-position in output vector
 	add	r7,r0
+	add	#3*4,r3
 	dt	r6
 	bf	.pvrloop
 
