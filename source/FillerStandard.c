@@ -29,17 +29,39 @@ void q3dFillerStandardUpdate(q3dTypePolyhedron *poly) {
 
 void q3dFillerStandardDraw(q3dTypePolyhedron *poly) {
 	int i;
+
+	pvr_vertex_t *vert;
+	pvr_vertex_t *vert2;
+	pvr_dr_state_t state;
+	pvr_dr_init(state);
+
 	for (i = 0; i < poly->polygonLength; i++) {
+		int j;
 
 		int len = poly->polygon[i].vertexLength-1;
-		int j;
-		for (j = 0; j < len; j++) {
-			poly->_finalVertex[poly->polygon[i].vertex[j]].flags = PVR_CMD_VERTEX;
-			pvr_prim(&poly->_finalVertex[poly->polygon[i].vertex[j]], sizeof(pvr_vertex_t));
-		}
-		poly->_finalVertex[poly->polygon[i].vertex[len]].flags = PVR_CMD_VERTEX_EOL;
-		pvr_prim(&poly->_finalVertex[poly->polygon[i].vertex[len]], sizeof(pvr_vertex_t));
-	}
 
+		for (j = 0; j < len; j++) {
+			vert2 = &poly->_finalVertex[poly->polygon[i].vertex[j]];
+			vert = pvr_dr_target(state);
+			vert->flags = PVR_CMD_VERTEX;
+			vert->x = vert2->x;
+			vert->y = vert2->y;
+			vert->z = vert2->z;
+//			vert->u = vert2->u;
+//			vert->v = vert2->v;
+			vert->argb = vert2->argb;
+			pvr_dr_commit(vert);
+		}
+		vert2 = &poly->_finalVertex[poly->polygon[i].vertex[len]];
+		vert = pvr_dr_target(state);
+		vert->flags = PVR_CMD_VERTEX_EOL;
+		vert->x = vert2->x;
+		vert->y = vert2->y;
+		vert->z = vert2->z;
+//		vert->u = vert2->u;
+//		vert->v = vert2->v;
+		vert->argb = vert2->argb;
+		pvr_dr_commit(vert);
+	}
 }
 
