@@ -6,7 +6,7 @@
  * = Q3D - quarns quick and dirty 3D-engine ;) (c) Outbreak 2001-2004        =
  * ===========================================================================
  *
- * @id		:	$Id: q3d.h,v 1.2 2004/02/19 14:02:18 quarn Exp $
+ * @id		:	$Id: q3d.h,v 1.3 2004/03/12 22:40:33 quarn Exp $
  * @brief	:	Main include-file for q3d. This should be the only
  *			file that users include in their projects.
  * @author	:	Fredrik "quarn" Ehnbom <quarn@home.se>
@@ -45,6 +45,7 @@ extern "C" {
 
 
 // data
+#include "Quaternion.h"
 #include "Plane.h"
 #include "Vertex.h"
 #include "Vector.h"
