@@ -20,13 +20,8 @@ q3dTypeMatrix _q3dMatrixPerspective __attribute__((aligned(32))) = {
 #define XCENTER 320.0f
 #define YCENTER 240.0f
 
-#define ZNEAR		1.0f
-#define ZFAR		100.0f
-
-#define COT_FOVY_2	1.0f
-
 // Screen view matrix (used to transform to screen space) 
-matrix_t screenview_matrix = {
+matrix_t screenview_matrix __attribute__((aligned(32))) = {
 	{ YCENTER,    0.0f,   0.0f,  0.0f },
 	{    0.0f, YCENTER,   0.0f,  0.0f },
 	{    0.0f,    0.0f,   1.0f,  0.0f },
@@ -42,7 +37,13 @@ matrix_t projection_matrix = {
 	{       0.0f,       0.0f, 0.0f,  1.0f }
 };
 */
-matrix_t projection_matrix = {
+
+#define ZNEAR		1.0f
+#define ZFAR		100.0f
+
+#define COT_FOVY_2	1.0f /* 90 degree view angle */
+
+q3dTypeMatrix projection_matrix __attribute__((aligned(32))) = {
 	{ COT_FOVY_2,       0.0f,                      0.0f,  0.0f },
 	{       0.0f, COT_FOVY_2,                      0.0f,  0.0f },
 	{       0.0f,       0.0f, (ZFAR+ZNEAR)/(ZNEAR-ZFAR), -1.0f },
