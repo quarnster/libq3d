@@ -48,10 +48,9 @@ void q3dPolyhedronUpdate(q3dTypePolyhedron *poly) {
 		q3dMatrixIdentity();
 
 		q3dMatrixTranslate(poly->_pos.x, poly->_pos.y, poly->_pos.z);
-		q3dMatrixRotateXYZ(poly->_agl.x, poly->_agl.y, poly->_agl.z);
-//		q3dMatrixRotateX(poly->_agl.x);
-//		q3dMatrixRotateY(poly->_agl.y);
-//		q3dMatrixRotateZ(poly->_agl.z);
+		q3dMatrixRotateX(poly->_agl.x);
+		q3dMatrixRotateY(poly->_agl.y);
+		q3dMatrixRotateZ(poly->_agl.z);
 
 
 //		updateMatrix = false;
@@ -91,7 +90,6 @@ void q3dPolyhedronUpdateNormals(q3dTypePolyhedron *poly) {
 		poly->_uVertexNormal[i].y /= num;
 		poly->_uVertexNormal[i].z /= num;
 	}
-
 }
 
 void q3dPolyhedronCompile(q3dTypePolyhedron *poly) {
@@ -141,7 +139,7 @@ void q3dPolyhedronPaint(q3dTypePolyhedron *poly, q3dTypeCamera *cam, q3dTypeFill
 	q3dMatrixApply(&_q3dMatrixCamera);
 	q3dMatrixApply(&_q3dMatrixObject);
 
-	q3dMatrixTransform(poly->vertex, &poly->_finalVertex[0].x, poly->vertexLength, sizeof(pvr_vertex_t));
+	q3dMatrixTransformPVR(poly->vertex, &poly->_finalVertex[0].x, poly->vertexLength, sizeof(pvr_vertex_t));
 
 	q3dMatrixIdentity();
 	q3dMatrixApply(&_q3dMatrixCamera);
