@@ -81,7 +81,7 @@ _q3dMatrixTransformPVR:
 	mov	r5,r0
 	mov	#4,r1
 	mov	#8,r2
-.loop:
+.pvrloop:
 	fmov.s	@r4+,fr0	! x
 	fmov.s	@r4+,fr1	! y
 	fmov.s	@r4+,fr2	! z
@@ -98,7 +98,7 @@ _q3dMatrixTransformPVR:
 	fmov.s	fr1,@(r0,r2)	! move 1 / w to the z-position in output vector
 	add	r7,r0
 	dt	r6
-	bf	.loop
+	bf	.pvrloop
 
 	rts
 	nop
