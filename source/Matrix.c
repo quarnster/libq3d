@@ -45,8 +45,8 @@ matrix_t projection_matrix = {
 
 q3dTypeMatrix projection_matrix __attribute__((aligned(32))) = {
 	{ COT_FOVY_2,       0.0f,                      0.0f,  0.0f },
-	{       0.0f, COT_FOVY_2,                      0.0f,  0.0f },
-	{       0.0f,       0.0f, (ZFAR+ZNEAR)/(ZNEAR-ZFAR), -1.0f },
+	{       0.0f, -COT_FOVY_2,                      0.0f,  0.0f },
+	{       0.0f,       0.0f, (ZFAR+ZNEAR)/(ZNEAR-ZFAR),  1.0f },
 	{       0.0f,       0.0f, 2*ZFAR*ZNEAR/(ZNEAR-ZFAR),  1.0f }
 };
 
