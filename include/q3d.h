@@ -3,12 +3,12 @@
 
 /**
  * ===========================================================================
- * = Q3D - quarns quick and dirty 3D-engine ;) (c) Outbreak 2001-2002        =
+ * = Q3D - quarns quick and dirty 3D-engine ;) (c) Outbreak 2001-2004        =
  * ===========================================================================
  *
- * @id		:	$Id: q3d.h,v 1.1 2004/01/24 21:41:43 quarn Exp $
+ * @id		:	$Id: q3d.h,v 1.2 2004/02/19 14:02:18 quarn Exp $
  * @brief	:	Main include-file for q3d. This should be the only
- *			file that users include in their projects. 
+ *			file that users include in their projects.
  * @author	:	Fredrik "quarn" Ehnbom <quarn@home.se>
  *
  */
@@ -22,6 +22,11 @@ extern "C" {
 // keyframing
 //#include "KeyFrame.h"
 //#include "KeyFramer.h"
+
+// levelhandling
+#include "Level.h"
+#include "Quadtree.h"
+#include "Quadnode.h"
 
 // objects
 //#include "Object.h"
@@ -40,6 +45,7 @@ extern "C" {
 
 
 // data
+#include "Plane.h"
 #include "Vertex.h"
 #include "Vector.h"
 #include "Angle.h"
