@@ -6,7 +6,7 @@
  * = Q3D - quarns quick and dirty 3d-engine ;) (c) Outbreak 2001-2002        =
  * ===========================================================================
  *
- * @id		:	$Id: Matrix.h,v 1.2 2004/01/28 20:14:02 quarn Exp $
+ * @id		:	$Id: Matrix.h,v 1.3 2004/02/18 14:47:08 quarn Exp $
  * @brief	:	Matrix code
  * @author	:	Fredrik "quarn" Ehnbom <quarn@home.se>
  *
@@ -90,6 +90,7 @@ void q3dMatrixStore(q3dTypeMatrix *matrix);
 // applies (mul) the specified matrix with the internal
 void q3dMatrixApply(q3dTypeMatrix *matrix);
 
+void q3dMatrixTransformPVR(q3dTypeVertex *source, void *target, int length, int destPitch);
 void q3dMatrixTransform(q3dTypeVertex *source, void *target, int length, int destPitch);
 void q3dMatrixTransformNormals(q3dTypeVector *source, q3dTypeVector *target, int length);
 
