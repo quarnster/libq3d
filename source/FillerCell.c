@@ -3,7 +3,7 @@
  * = Q3D - quarns quick and dirty 3D-engine ;) (c) Outbreak 2001-2003        =
  * ===========================================================================
  *
- * @id		:	$Id: FillerCell.c,v 1.2 2004/02/18 14:46:48 quarn Exp $
+ * @id		:	$Id: FillerCell.c,v 1.3 2004/03/18 09:53:30 quarn Exp $
  * @brief	:	A filler that does Cellshading
  * @author	:	Fredrik "quarn" Ehnbom <quarn@home.se"
  *
@@ -52,7 +52,7 @@ void q3dFillerCellInit(q3dTypeFillerCell *type) {
 void q3dFillerCellUpdate(q3dTypePolyhedron *poly) {
 	int i;
 	for (i = 0; i < poly->vertexLength; i++) {
-		float shade =  poly->_vertexNormal[i].z;
+		float shade =  -poly->_vertexNormal[i].z;
 		shade = CLAMP(shade);
 
 		float a = poly->material.color.a;
@@ -75,7 +75,6 @@ void q3dFillerCellDraw(q3dTypePolyhedron *poly) {
 	pvr_dr_init(state);
 
 	for (i = 0; i < poly->polygonLength; i++) {
-//		if (poly->pNormal[i].z > 0) continue;
 		int j;
 
 		int len = poly->polygon[i].vertexLength-1;
